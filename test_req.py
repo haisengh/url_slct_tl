@@ -3,9 +3,9 @@ from bs4 import BeautifulSoup
 records_arr = [] 
 url_arr = []
 status_code = []
-with open("UrlWithIn6Month-j-yanglv20180316142906.txt", "r", encoding = "utf-8") as f:
-	with open("records.txt", "w", encoding = "utf-8") as v: 
-		with open("title.txt", "w", encoding = "utf-8") as t:
+with open("txt/UrlWithIn6Month-j-yanglv20180316142906.txt", "r", encoding = "utf-8") as f:
+	with open("txt/records.txt", "w", encoding = "utf-8") as v: 
+		with open("txt/title.txt", "w", encoding = "utf-8") as t:
 			for i in f:
 				url_arr.append(i.strip())
 				try: 
