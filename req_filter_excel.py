@@ -2,24 +2,28 @@ import requests
 import sys
 from bs4 import BeautifulSoup
 from openpyxl import Workbook 
+import re
 
 script, url_filename = sys.argv
 # get the url list from the file given by user after the script name.
-subdomain_list = []
+Subdomain_list = []
 # subdomain_dic will be like "{' chao': ['http://www.baidu.com', 'http://sina.cn', 'http://qq.com', 'http://jd.com'], ' hello': ['http://www.taobao.com']}"
 subdomain_dic = {}
 def get_url_list (url_file):
-	index = -1
 	with open(url_file, "r", encoding = "utf-8") as f:
-		for i in f:
-			url = i.strip()
-			if url[0:9] == "Subdomain":
-				index = index + 1
-				subdomain_list.append(url[11:])
-				subdomain_dic[subdomain_list[index]] = []
-			else:
-				subdomain_dic[subdomain_list[index]].append(url)
-				
+		line_list = list(f)
+		if line_list[0].find("Subdomain") == -1:
+			print("there's no subdomain")
+			subdomain_dic[url_file] = []
+			for i in line_list:
+				subdomain_dic[url_file].append(i)
+		else:
+			for i in line_list:
+				if i.find("Subdomain") != -1:
+					Subdomain_list.append(i[12:].strip())
+					subdomain_dic[Subdomain_list[len(Subdomain_list)-1]] = []
+				else: 
+					subdomain_dic[Subdomain_list[len(Subdomain_list)-1]].append(i.strip())			
 	return subdomain_dic
 
 # test the availability of each url in the url_list.
@@ -49,6 +53,8 @@ for i,j in a.items():
 
 wb = Workbook()
 for i,j in a.items():
+	if i.find("/") != -1:
+		i = "root"
 	ws = wb.create_sheet(i)
 	for m,n in j.items():
 		ws.append([m,n])
