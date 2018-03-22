@@ -3,7 +3,7 @@ import sys
 from bs4 import BeautifulSoup
 from openpyxl import Workbook 
 
-# script, url_filename = sys.argv
+script, url_filename = sys.argv
 # get the url list from the file given by user after the script name.
 subdomain_list = []
 # subdomain_dic will be like "{' chao': ['http://www.baidu.com', 'http://sina.cn', 'http://qq.com', 'http://jd.com'], ' hello': ['http://www.taobao.com']}"
@@ -40,7 +40,7 @@ def url_test (url_list):
 	return title_dic
 
 
-a = get_url_list("txt/sample_url.txt")
+a = get_url_list(url_filename)
 print(a)
 for i,j in a.items():
 	a[i] = url_test(j)
@@ -53,4 +53,4 @@ for i,j in a.items():
 	for m,n in j.items():
 		ws.append([m,n])
 
-wb.save('sample.xlsx')
+wb.save(url_filename+'.xlsx')
