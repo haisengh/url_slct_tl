@@ -16,7 +16,7 @@ def get_url_list (url_file):
 			print("there's no subdomain")
 			subdomain_dic[url_file] = []
 			for i in line_list:
-				subdomain_dic[url_file].append(i)
+				subdomain_dic[url_file].append(i.strip())
 		else:
 			for i in line_list:
 				if i.find("Subdomain") != -1:
